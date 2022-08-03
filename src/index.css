@@ -1,29 +1,71 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
 
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.table {
-  margin-left: 15%;
+.header {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  
 }
 
-.sary img{
-  width: 10px;
-  height: 10px;
+.header h1  {
+  background-color: #263B46;
+  color: #21DAFF;
+  box-shadow: 5px 5px 5px 5px #888888;
+  text-shadow: 3px 3px #558abb;
 }
+
+.header h1:hover {
+  background-color: rgb(240, 206, 16);
+  color: black;
+  cursor: pointer;
+}
+
+.header h1::shadow {
+  box-shadow: #263B46;
+}
+#image {
+  cursor: pointer;
+
+}
+
+
+.cadre {
+  border: 1.5px solid #21DAFF;
+  width: var(--width);
+  height: var(--height);
+  top: var(--top);
+  left: var(--left);
+  position: absolute;
+  z-index: 10;
+}
+
+.contains  {
+  position: relative;
+}
+
+.data {
+  margin-right: 0;
+  margin-left: 50px;
+}
+
+
+.card-body {
+  overflow-y: scroll;
+  height: 400px;
+  margin-left: 30px;
+  scroll-behavior: smooth;
+ scrollbar-color:#21DAFF #263B46;
+}
+
+#data {
+  background-color: #263B46;
+}
+
+#container {
+  box-shadow: 10px 10px 8px 10px #888888;
+}
+

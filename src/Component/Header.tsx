@@ -1,11 +1,19 @@
 import  {  RekognitionClient ,  CompareFacesCommand  }  from  "@aws-sdk/client-rekognition" ;
 
 
+
 import AWS from 'aws-sdk';
 import atob from 'atob';
 import { useState, useEffect } from "react";
 import { setTextRange } from "typescript";
 import Card from "./Card";
+import { Loading } from "./Loading";
+import "animate.css/animate.min.css";
+import { AnimationOnScroll  } from 'react-animation-on-scroll';
+import { getSize } from "./Cadre";
+require('dotenv').config()
+
+
 
 
 
@@ -13,9 +21,15 @@ import Card from "./Card";
 export function Header() {
   let [res , setRes ] = useState<any>();
   let [image , setImage ] = useState<any>();
-let [other , setOther] = useState<any>(); 
+let [show , setShow] = useState<boolean>(false); 
+const [loading , setLoading] = useState<boolean>(false);
+const [dataList, setDataList] = useState<any>()
+
 
     function ProcessImage() {
+      setShow(true)
+
+      setLoading(true)
       AnonLog();
       var control = document?.getElementById("fileToUpload") as HTMLInputElement;
       var file = control.files![0] ;
@@ -84,17 +98,14 @@ let [other , setOther] = useState<any>();
                 let gender = response.Gender?.Value;
             console.log(`The dected face is beetwen ${low} and ${high} years old`);
             console.log(gender);
-             setRes(data.FaceDetails)
-            // console.log(res);
-            
-            })
-            
-    
+             setRes(data.FaceDetails)            
+            })   
       //    table += "</table>";
       //   const div = document.getElementById("opResult")!.innerHTML = table ;
             
         }
       });
+      setLoading(false)
     }
 
 
@@ -102,50 +113,52 @@ let [other , setOther] = useState<any>();
 function AnonLog() {
     
   // Configure the credentials provider to use your identity pool
-  AWS.config.region = 'eu-west-2'; // Region
+  AWS.config.region = process.env.REACT_ONE; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'eu-west-2:371cdf1c-657e-4e3f-a6a0-3cdcf905bfdc',
+    IdentityPoolId: process.env.REACT_TWO as string,
   });
-  // Make the call to obtain credentials
- /* AWS.config.credentials.get(function () {
-    // Credentials will be available when this function is called.
-    var accessKeyId = AWS.config.credentials!.accessKeyId;
-    var secretAccessKey = AWS.config.credentials!.secretAccessKey;
-    var sessionToken = AWS.config.credentials!.sessionToken;
-  }); */
 }
 
-useEffect(() => {
-  if(res){
-    let ex = ""
-    for (let index = 0; index < res.length; index++) {
-      
-      ex += (res[index].AgeRange.Low + "and" + res[index].AgeRange.High) 
-    }
-    setOther(ex)
-  }
-}, [res])
+
+
+
+let donner = JSON.stringify(res);
+console.log(donner);
+
 
 
 return (
 <>
 <div className="container">
-<header className="App-header">
-    <h1>Age Estimator</h1>
-    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" onChange={() => {
+<header className="header" >
+    <h1 className="display-1">FACE DETECTOR</h1> <br />
+    <input type="file" style={{width : "30%",marginBottom : "0%",marginLeft : "32.5%"}}  className="form-control" name="fileToUpload" id="fileToUpload" accept="image/*" onChange={() => {
       ProcessImage();
 }}/>    
-    <img src={image} alt="Aiza Leizy" />
-    <p id="opResult">{JSON.stringify(res)}</p>
+  
+</header> <br />
+{show && <body>
+<div className="card mb-3" id="data">
+  <div className="row g-0" id="container">
+    <div className="col-md-4" id="border" >
+    <div className="contains">
 
-</header>
-{/*<body>
-  <div className="table">
-    <div className="sary">
+      <img src={image}  className="img-fluid rounded-start" 
+      alt="..." style={{borderRadius : "2%",height : "400px"}}
+       onLoad={(e : any)=>{getSize(e , res)}}
+      />
+      <div className="cadre"></div>
     </div>
-    {res? <Card datas={res}/>:""}
+    </div>
+    <div className="col-md-8" >
+      <div className="card-body" >
+        <div className="card-title">{
+        loading? <Loading/> : res? <Card datas={res}/>:""}</div>
+      </div>
+    </div>
   </div>
-</body> */}
+</div>
+</body>}
 </div> 
 </>
 

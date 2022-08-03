@@ -2,6 +2,17 @@ li{
     list-style: none;
 }
 
-.valueContainer  {
-    
+.valueContainer p{
+    text-align: center;
+    color: white;
+}
+.valueContainer p:hover {
+    background-color: #21DAFF;
+    color: black;
+}
+
+.valueContainer h6 {
+    color: #CEEFF4;
+    text-shadow: 1px 1px #558abb;
+
 }

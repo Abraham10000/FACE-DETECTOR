@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Markup } from 'interweave'
 import './Card.css'
+import "animate.css/animate.min.css";
+
+import { AnimationOnScroll  } from 'react-animation-on-scroll';
+
 
 export default function Card(props: any) {
   const [key, setKey] = useState<any>()
@@ -49,12 +53,14 @@ useEffect(()=>{
 
   return (
     <> 
+    
       {value.map((elt : any , index : number)=> (
           <div className='valueContainer'>
-          <h6><Markup content={key[index]} /> :</h6>
+          <h6><Markup content={key[index]} /> :</h6> *
         <p><Markup content={(elt).toString()}/></p>
         </div> 
-        ))}          
+        ))}     
+     
     </>
   )
 }
