@@ -11,7 +11,6 @@ import { Loading } from "./Loading";
 import "animate.css/animate.min.css";
 import { AnimationOnScroll  } from 'react-animation-on-scroll';
 import { getSize } from "./Cadre";
-require('dotenv').config()
 
 
 
@@ -104,8 +103,9 @@ const [dataList, setDataList] = useState<any>()
       //   const div = document.getElementById("opResult")!.innerHTML = table ;
             
         }
+        setLoading(false)
+
       });
-      setLoading(false)
     }
 
 
@@ -113,9 +113,9 @@ const [dataList, setDataList] = useState<any>()
 function AnonLog() {
     
   // Configure the credentials provider to use your identity pool
-  AWS.config.region = 'eu-west-2'; // Region
+  AWS.config.region = process.env.REACT_APP_ONE; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'eu-west-2:371cdf1c-657e-4e3f-a6a0-3cdcf905bfdc',
+    IdentityPoolId: process.env.REACT_APP_TWO as string,
   });
 }
 
